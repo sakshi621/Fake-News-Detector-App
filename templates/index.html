@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fake News Detector</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>📰 Fake News Detection System</h1>
+
+    <textarea id="news" placeholder="Enter news text here..."></textarea>
+
+    <button onclick="detectNews()">Detect News</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function detectNews() {
+    let news = document.getElementById("news").value;
+
+    fetch("/predict", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "news=" + encodeURIComponent(news)
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("result").innerHTML = data.result;
+    });
+}
+</script>
+
+</body>
+</html>
